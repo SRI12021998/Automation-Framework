@@ -140,4 +140,10 @@ public interface WebAutomationCore
      * @return the clickable WebElement
      */
     WebElement waitUntilElementClickable(WebElement element);
+
+    /**
+     * Moves the mouse to the middle of the element.
+     * @param target element to move to.
+     */
+    void moveToElement(WebElement element);
 }

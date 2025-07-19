@@ -189,11 +189,19 @@ public class SeleniumBase implements WebAutomationCore
 		.until(ExpectedConditions.visibilityOf(element));
 		return element;
 	}
-
+	
+	@Override
 	public  WebElement waitUntilElementClickable(WebElement element)
 	{
 		wait.withMessage("waiting for the element to be clickable")
 		.until(ExpectedConditions.elementToBeClickable(element));
 		return element;
+	}
+
+	@Override
+	public void moveToElement(WebElement element) 
+	{
+		action=new Actions(driver);
+		action.moveToElement(element);
 	}
 }
