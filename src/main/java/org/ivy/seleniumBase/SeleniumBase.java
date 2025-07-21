@@ -1,11 +1,13 @@
 package org.ivy.seleniumBase;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,15 +17,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SeleniumBase implements WebAutomationCore 
+
+public class SeleniumBase implements WebCoreAPI
 {
-	long timeOuts = 10; //30
+	long timeOuts = 10;
 	long maxWaitTime =15;
-	
 	RemoteWebDriver driver = null;
 	WebDriverWait wait = null;
 	Actions action;
@@ -31,15 +34,30 @@ public class SeleniumBase implements WebAutomationCore
 	TakesScreenshot ts;
 	Robot robot;
 	Wait <WebDriver> fluentWait;
+
 	
 	@Override
 	public void launchBrowser(String url) 
 	{
-		driver=new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
 		driver.get(url);
+		action = new Actions(driver);
+		je = (JavascriptExecutor) driver;
+		ts = (TakesScreenshot) driver;
+		try 
+		{
+			robot = new Robot();
+		} 
+		catch (AWTException e) 
+		{
+			e.printStackTrace();
+		}
 		wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
+		fluentWait =new FluentWait<WebDriver>(driver)
+		.withTimeout(Duration.ofSeconds(15))
+		.pollingEvery(Duration.ofMillis(300))
+		.ignoring(Exception.class);
 	}
 
 	@Override
@@ -63,7 +81,22 @@ public class SeleniumBase implements WebAutomationCore
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
 		driver.get(url);
+		action = new Actions(driver);
+		je = (JavascriptExecutor) driver;
+		ts = (TakesScreenshot) driver;
+		try 
+		{
+			robot = new Robot();
+		} 
+		catch (AWTException e) 
+		{
+			e.printStackTrace();
+		}
 		wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
+		fluentWait =new FluentWait<WebDriver>(driver)
+		.withTimeout(Duration.ofSeconds(15))
+		.pollingEvery(Duration.ofMillis(300))
+		.ignoring(Exception.class);
 	}
 
 	@Override
@@ -201,7 +234,49 @@ public class SeleniumBase implements WebAutomationCore
 	@Override
 	public void moveToElement(WebElement element) 
 	{
-		action=new Actions(driver);
-		action.moveToElement(element);
+		action.moveToElement(element).perform();
 	}
+
+	@Override
+	public void moveToElementAndClick(WebElement element) 
+	{
+		action.moveToElement(element).click().build().perform();
+	}
+
+	@Override
+	public void clickAndHold(WebElement element) 
+	{
+		action.clickAndHold(element).perform();
+	}
+
+	@Override
+	public void release(WebElement element) 
+	{
+		action.release(element).perform();
+	}
+
+	@Override
+	public void rightClick(WebElement element) 
+	{
+		action.contextClick(element).perform();
+	}
+
+	@Override
+	public void doubleClick(WebElement element) 
+	{
+		action.doubleClick(element).perform();
+	}
+
+	@Override
+	public void keyDown(Keys key) 
+	{
+		action.keyDown(key).perform();
+	}
+
+	@Override
+	public void keyUp(Keys key) 
+	{
+		action.keyUp(key).perform();
+	}
+
 }
