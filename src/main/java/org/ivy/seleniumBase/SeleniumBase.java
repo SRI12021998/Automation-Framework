@@ -279,4 +279,95 @@ public class SeleniumBase implements WebCoreAPI
 		action.keyUp(key).perform();
 	}
 
+	@Override
+	public void jsWaitForPageToLoad() 
+	{
+		wait.until(driver -> je.executeScript("return document.readyState").equals("complete"));
+	}
+
+	@Override
+	public void jsScrollToElement(WebElement element) 
+	{
+		je.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	@Override
+	public void jsClick(WebElement element) 
+	{
+		je.executeScript("arguments[0].click();", element);
+	}
+
+	@Override
+	public void jsEnterText(WebElement element, String testData) 
+	{
+		je.executeScript("arguments[0].value=arguments[1];", element, testData);
+	}
+
+	@Override
+	public String jsGetPageTitle() 
+	{
+		return String.valueOf(je.executeScript("return document.title;"));
+	}
+
+	@Override
+	public void jsScrollToBottom() 
+	{
+		je.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+	}
+
+	@Override
+	public void jsAbsoluteScroll(int x, int y) 
+	{
+		je.executeScript("window.scrollTo(arguments[0], arguments[1]);", x, y);
+	}
+
+	@Override
+	public void jsRelativeScroll(int x, int y) 
+	{
+		je.executeScript("window.scrollBy(arguments[0], arguments[1]);", x, y);
+	}
+
+	@Override
+	public void jsHighlightElement(WebElement element) 
+	{
+		je.executeScript("arguments[0].style.border='3px solid red';", element);
+	}
+
+	@Override
+	public String jsGetInnerText(WebElement element) 
+	{
+		return (String)je.executeScript("return arguments[0].innerText;", element);
+	}
+
+	@Override
+	public boolean jsIsElementVisible(WebElement element) 
+	{
+		return (Boolean)je.executeScript("return arguments[0].offsetWidth>0&&arguments[0].offsetHeight>0;", element);
+	}
+
+	@Override
+	public void jsRemoveReadonlyAttribute(WebElement element) 
+	{
+		je.executeScript("arguments[0].removeAttribute('readonly');", element);
+	}
+
+	@Override
+	public void waitAndSwitchToFrame(WebElement element) 
+	{
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
+	}
+
+	@Override
+	public void waitAndSwitchToFrame(String nameOrId) 
+	{
+		wait.until((ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId)));
+	}
+
+	@Override
+	public void waitAndSwitchToFrame(int index) 
+	{
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+	}
+
+	
 }

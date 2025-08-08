@@ -255,15 +255,17 @@ public interface WebCoreAPI
     /**
      * Retrieves the inner text of a web element.
      * @param element the WebElement to retrieve text from
+     * @return the inner text of the element as String
      */
-    void jsGetInnerText(WebElement element);
+    String jsGetInnerText(WebElement element);
 
     /**
      * Checks if an element is currently visible.
      * This method can be used to verify visibility even when the element is not interactable.
      * @param element the WebElement to check
+     * @return true if the element is visible, false otherwise
      */
-    void jsIsElementVisible(WebElement element);
+    boolean jsIsElementVisible(WebElement element);
 
     /**
      * Removes the 'readonly' attribute from an input element.
@@ -272,5 +274,22 @@ public interface WebCoreAPI
      */
     void jsRemoveReadonlyAttribute(WebElement element);
 
-    
+    /**
+     * Waits for the element to be available and switch to it
+     * @param element Switches to a frame by WebElement.
+     */
+    void waitAndSwitchToFrame(WebElement element);
+
+    /**
+     * Waits for the element to be available and switch to it
+     * @param nameOrId Switches to a frame by nameOrId.
+     */
+    void waitAndSwitchToFrame(String nameOrId);
+
+    /**
+     * Waits for the element to be available and switch to it
+     * @param nameOrId Switches to a frame by index.
+     */
+    void waitAndSwitchToFrame(int index);
+
 }
