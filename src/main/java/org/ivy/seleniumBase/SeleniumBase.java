@@ -111,33 +111,33 @@ public class SeleniumBase implements WebCoreAPI
 		driver.quit();
 	}
 
-	@Override
-	public WebElement element(Locators type, String value) 
-	{
-		switch (type) 
-		{
-	        case id:
-	            return driver.findElement(By.id(value));
-	        case name:
-	            return driver.findElement(By.name(value));
-	        case className:
-	            return driver.findElement(By.className(value));
-	        case tagName:
-	            return driver.findElement(By.tagName(value));
-	        case cssSelector:
-	            return driver.findElement(By.cssSelector(value));
-	        case linkText:
-	            return driver.findElement(By.linkText(value));
-	        case partialLinkText:
-	            return driver.findElement(By.partialLinkText(value));
-	        case xpath:
-	            return driver.findElement(By.xpath(value));
-	        default:
-	            System.err.println("Locator type is not defined");
-	            throw new IllegalArgumentException("Invalid locator type: " + type);
-		}
+	// @Override
+	// public WebElement element(Locators type, String value) 
+	// {
+	// 	switch (type) 
+	// 	{
+	//         case id:
+	//             return driver.findElement(By.id(value));
+	//         case name:
+	//             return driver.findElement(By.name(value));
+	//         case className:
+	//             return driver.findElement(By.className(value));
+	//         case tagName:
+	//             return driver.findElement(By.tagName(value));
+	//         case cssSelector:
+	//             return driver.findElement(By.cssSelector(value));
+	//         case linkText:
+	//             return driver.findElement(By.linkText(value));
+	//         case partialLinkText:
+	//             return driver.findElement(By.partialLinkText(value));
+	//         case xpath:
+	//             return driver.findElement(By.xpath(value));
+	//         default:
+	//             System.err.println("Locator type is not defined");
+	//             throw new IllegalArgumentException("Invalid locator type: " + type);
+	// 	}
 
-	}
+	// }
 
 	@Override
 	public void switchToWindow(int i) 

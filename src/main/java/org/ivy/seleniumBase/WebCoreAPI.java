@@ -43,14 +43,14 @@ public interface WebCoreAPI
      */
     void quit();
 
-    /**
-     * Finds and returns a web element based on the provided locator type and value.
-     *
-     * @param type the locator strategy (e.g., ID, NAME, LINKTEXT)
-     * @param value the value of the locator
-     * @return the matching WebElement
-     */
-    WebElement element(Locators type, String value);
+    // /**
+    //  * Finds and returns a web element based on the provided locator type and value.
+    //  *
+    //  * @param type the locator strategy (e.g., ID, NAME, LINKTEXT)
+    //  * @param value the value of the locator
+    //  * @return the matching WebElement
+    //  */
+    // WebElement element(Locators type, String value);
 
     /**
      * Switches to a specific browser tab/window by index
