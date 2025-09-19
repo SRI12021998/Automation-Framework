@@ -1,5 +1,7 @@
-package org.ivy.seleniumBase;
+package org.ivy.interfaces;
 
+import org.ivy.enums.Browser;
+import org.ivy.enums.Locators;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
