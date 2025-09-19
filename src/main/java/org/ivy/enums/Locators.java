@@ -1,4 +1,4 @@
-package org.ivy.seleniumBase;
+package org.ivy.enums;
 
 public enum Locators 
 {

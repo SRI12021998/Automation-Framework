@@ -5,6 +5,9 @@ import java.awt.Robot;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Set;
+import org.ivy.enums.Browser;
+import org.ivy.enums.Locators;
+import org.ivy.interfaces.WebCoreAPI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -34,7 +37,6 @@ public class SeleniumBase implements WebCoreAPI
 	TakesScreenshot ts;
 	Robot robot;
 	Wait <WebDriver> fluentWait;
-
 	
 	@Override
 	public void launchBrowser(String url) 
