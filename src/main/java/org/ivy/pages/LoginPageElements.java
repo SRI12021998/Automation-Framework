@@ -1,6 +1,7 @@
 package org.ivy.pages;
 
 import org.openqa.selenium.WebElement;
+import org.ivy.common.BaseTest;
 import org.ivy.seleniumBase.SeleniumBase;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPageElements
 {
 	private SeleniumBase base;
+	
 	public LoginPageElements(SeleniumBase base)
 	{
 		PageFactory.initElements(base.getCurrentInstance(), this);
@@ -35,7 +37,7 @@ public class LoginPageElements
 	public void login()
 	{
 		base.enterText(userName,"L1_user");
-		base.enterText(password,"1");
+		base.enterText(password,"password1");
 		base.click(loginBtn);
 	}
 	

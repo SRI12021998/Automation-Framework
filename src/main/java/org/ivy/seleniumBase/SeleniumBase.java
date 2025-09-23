@@ -31,6 +31,7 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 {
 	long timeOuts = 10;
 	long maxWaitTime =15;
+	long interval=300;
 	private RemoteWebDriver driver;
 	WebDriverWait wait;
 	Actions action;
@@ -49,17 +50,22 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 		return this.driver;
 	}
 	
+	public void setWaitConfig()
+	{
+		this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(maxWaitTime));
+		
+		this.fluentWait =new FluentWait<WebDriver>(driver)
+		.withTimeout(Duration.ofSeconds(maxWaitTime))
+		.pollingEvery(Duration.ofMillis(interval))
+		.ignoring(Exception.class);
+		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
+	}
+	
 	@Override
 	public void launchBrowser(String url) 
 	{
 		setCurrentInstance();
-		this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(maxWaitTime));
-		this.fluentWait =new FluentWait<WebDriver>(driver)
-		.withTimeout(Duration.ofSeconds(15))
-		.pollingEvery(Duration.ofMillis(300))
-		.ignoring(Exception.class);
-		this.driver.manage().window().maximize();
-		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
+		setWaitConfig();
 		this.driver.get(url);
 		action = new Actions(driver);
 		je = (JavascriptExecutor) driver;

@@ -13,7 +13,7 @@ public class BaseTest
 	public void initSetup()
 	{
 		this.base=BaseManager.getBase();
-		base.launchBrowser("https://bimbo-co-01-qa.ivycpg.com/web/DMS");
+		base.launchBrowser("https://bimbo-co-uat.ivycpg.com/web/DMS");
 	}
 	
 	
