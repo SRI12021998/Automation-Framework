@@ -48,7 +48,7 @@ public interface WebCoreAPI
     /**
      * Finds and returns a web element based on the provided locator type and value.
      *
-     * @param type the locator strategy (e.g., ID, NAME, LINKTEXT)
+     * @param type the locator strategy (e.g., id, name, linkText)
      * @param value the value of the locator
      * @return the matching WebElement
      */

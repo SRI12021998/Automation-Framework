@@ -2,11 +2,11 @@ package org.ivy.factory;
 
 import org.ivy.seleniumBase.SeleniumBase;
 
-public class Base
+public class BaseManager
 {
-	public static SeleniumBase getBaseManager()
+	public static SeleniumBase getBase()
 	{
 		return new SeleniumBase();
 	}
-
+	
 }

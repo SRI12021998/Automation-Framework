@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import org.ivy.enums.Browser;
 import org.ivy.enums.Locators;
+import org.ivy.factory.DriverFactory;
 import org.ivy.interfaces.WebCoreAPI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,24 +27,40 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class SeleniumBase implements WebCoreAPI
+public class SeleniumBase extends DriverFactory implements WebCoreAPI
 {
 	long timeOuts = 10;
 	long maxWaitTime =15;
-	RemoteWebDriver driver = null;
-	WebDriverWait wait = null;
+	private RemoteWebDriver driver;
+	WebDriverWait wait;
 	Actions action;
 	JavascriptExecutor je;
 	TakesScreenshot ts;
 	Robot robot;
 	Wait <WebDriver> fluentWait;
 	
+	public void setCurrentInstance()
+	{
+		this.driver=DriverFactory.initDriver();
+	}
+	
+	public RemoteWebDriver getCurrentInstance()
+	{
+		return this.driver;
+	}
+	
 	@Override
 	public void launchBrowser(String url) 
 	{
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
-		driver.get(url);
+		setCurrentInstance();
+		this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(maxWaitTime));
+		this.fluentWait =new FluentWait<WebDriver>(driver)
+		.withTimeout(Duration.ofSeconds(15))
+		.pollingEvery(Duration.ofMillis(300))
+		.ignoring(Exception.class);
+		this.driver.manage().window().maximize();
+		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
+		this.driver.get(url);
 		action = new Actions(driver);
 		je = (JavascriptExecutor) driver;
 		ts = (TakesScreenshot) driver;
@@ -55,11 +72,7 @@ public class SeleniumBase implements WebCoreAPI
 		{
 			e.printStackTrace();
 		}
-		wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
-		fluentWait =new FluentWait<WebDriver>(driver)
-		.withTimeout(Duration.ofSeconds(15))
-		.pollingEvery(Duration.ofMillis(300))
-		.ignoring(Exception.class);
+		
 	}
 
 	@Override
