@@ -26,7 +26,7 @@ public class Login extends BaseTest
 	{
 		LoginPageElements loginPage=pages.getPageInstance(LoginPageElements.class, super.base);
 		loginPage.login();
-		L1HomePageElements homePage=new L1HomePageElements(super.base);
+		L1HomePageElements homePage=pages.getPageInstance(L1HomePageElements.class, super.base);
 		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
 	}
 }

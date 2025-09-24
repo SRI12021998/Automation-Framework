@@ -20,7 +20,7 @@ public class TestListenerUtil implements ITestListener
 
    public void onTestFailure(ITestResult result) 
     {
-
+	   LoggerUtil.error("======"+result.getName()+" Case Failed======");
     }
 
 

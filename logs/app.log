@@ -14,3 +14,10 @@
 [2025-09-23 17:56:32] [INFO ] LoggerUtil - ======Starting LoginTest Test======
 [2025-09-23 17:56:34] [INFO ] LoggerUtil - ======LoginTest Case Passed======
 [2025-09-23 17:56:34] [INFO ] LoggerUtil - ======Completing LoginTest TestSuite======
+[2025-09-24 08:54:07] [INFO ] LoggerUtil - ======Starting Default test TestSuite======
+[2025-09-24 08:54:07] [INFO ] LoggerUtil - ======Starting Default test Test======
+[2025-09-24 08:54:28] [INFO ] LoggerUtil - ======Completing Default test TestSuite======
+[2025-09-24 09:11:23] [INFO ] LoggerUtil - ======Starting Default test TestSuite======
+[2025-09-24 09:11:23] [INFO ] LoggerUtil - ======Starting Default test Test======
+[2025-09-24 09:11:27] [INFO ] LoggerUtil - ======LoginTest Case Passed======
+[2025-09-24 09:11:27] [INFO ] LoggerUtil - ======Completing Default test TestSuite======
