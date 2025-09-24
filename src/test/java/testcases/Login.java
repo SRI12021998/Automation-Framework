@@ -1,17 +1,30 @@
 package testcases;
 
 import org.ivy.common.BaseTest;
+import org.ivy.factory.PageObjectFactory;
 import org.ivy.pages.L1HomePageElements;
 import org.ivy.pages.LoginPageElements;
+import org.ivy.utils.TestListenerUtil;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(TestListenerUtil.class)
 public class Login extends BaseTest
 {	
-	@Test(description="Verify able to login")
+	private PageObjectFactory pages;
+	
+	@BeforeMethod()
+	public void initPages()
+	{
+		pages=new PageObjectFactory();
+	}
+	
+	@Test(description="Verify able to login with valid credentials")
 	public void LoginTest()
 	{
-		LoginPageElements loginPage=new LoginPageElements(super.base);
+		LoginPageElements loginPage=pages.getPageInstance(LoginPageElements.class, super.base);
 		loginPage.login();
 		L1HomePageElements homePage=new L1HomePageElements(super.base);
 		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
