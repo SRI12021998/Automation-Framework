@@ -1,2 +1,4 @@
 /target/
-logs/
+/logs/
+# Temporary files
+*.log
