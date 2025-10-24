@@ -135,20 +135,6 @@ public interface WebCoreAPI
     boolean isSelected(WebElement element);
     
     /**
-     * Waits until the element is visible and returns it.
-     * @param element the WebElement to wait for
-     * @return the visible WebElement
-     */
-    WebElement waitUntilElementVisible(WebElement element);
-    
-    /**
-     * Waits until the element is clickable and returns it.
-     * @param element the WebElement to wait for
-     * @return the clickable WebElement
-     */
-    WebElement waitUntilElementClickable(WebElement element);
-
-    /**
      * Moves the mouse to the middle of the element.
      * @param target element to move to.
      */
@@ -195,11 +181,6 @@ public interface WebCoreAPI
      * @param key the key to release
      */
     void keyUp(Keys key);
-
-    /**
-     * Waits for the page to fully load by checking the document ready state using JavascriptExecutor.
-     */
-    void jsWaitForPageToLoad();
 
     /**
      * Scrolls the page to the specified element
@@ -275,23 +256,5 @@ public interface WebCoreAPI
      * @param element the input WebElement to modify
      */
     void jsRemoveReadonlyAttribute(WebElement element);
-
-    /**
-     * Waits for the element to be available and switch to it
-     * @param element Switches to a frame by WebElement.
-     */
-    void waitAndSwitchToFrame(WebElement element);
-
-    /**
-     * Waits for the element to be available and switch to it
-     * @param nameOrId Switches to a frame by nameOrId.
-     */
-    void waitAndSwitchToFrame(String nameOrId);
-
-    /**
-     * Waits for the element to be available and switch to it
-     * @param nameOrId Switches to a frame by index.
-     */
-    void waitAndSwitchToFrame(int index);
 
 }

@@ -1,6 +1,6 @@
 package org.ivy.common;
 
-import org.ivy.factory.BaseManager;
+import org.ivy.factory.BaseFactory;
 import org.ivy.seleniumBase.SeleniumBase;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -12,7 +12,7 @@ public class BaseTest
 	@BeforeSuite()
 	public void initSetup()
 	{
-		this.base=BaseManager.getBase();
+		this.base=BaseFactory.getBase();
 		base.launchBrowser("https://bimbo-co-uat.ivycpg.com/web/DMS");
 	}
 	

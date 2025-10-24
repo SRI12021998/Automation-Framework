@@ -1,7 +1,6 @@
 package org.ivy.pages;
 
 import org.openqa.selenium.WebElement;
-import org.ivy.common.BaseTest;
 import org.ivy.seleniumBase.SeleniumBase;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;

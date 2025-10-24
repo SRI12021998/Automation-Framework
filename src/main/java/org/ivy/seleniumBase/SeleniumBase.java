@@ -2,43 +2,37 @@ package org.ivy.seleniumBase;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Set;
 import org.ivy.enums.Browser;
 import org.ivy.enums.Locators;
 import org.ivy.factory.DriverFactory;
+import org.ivy.factory.WaitUtilityFactory;
 import org.ivy.interfaces.WebCoreAPI;
+import org.ivy.utils.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class SeleniumBase extends DriverFactory implements WebCoreAPI
 {
-	long timeOuts = 10;
-	long maxWaitTime =15;
-	long interval=300;
 	private RemoteWebDriver driver;
+	private WaitUtils waitUtils;
 	WebDriverWait wait;
 	Actions action;
 	JavascriptExecutor je;
 	TakesScreenshot ts;
 	Robot robot;
-	Wait <WebDriver> fluentWait;
 	
 	public void setCurrentInstance()
 	{
@@ -50,23 +44,15 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 		return this.driver;
 	}
 	
-	public void setWaitConfig()
-	{
-		this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(maxWaitTime));
-		
-		this.fluentWait =new FluentWait<WebDriver>(driver)
-		.withTimeout(Duration.ofSeconds(maxWaitTime))
-		.pollingEvery(Duration.ofMillis(interval))
-		.ignoring(Exception.class);
-		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
-	}
 	
 	@Override
 	public void launchBrowser(String url) 
 	{
 		setCurrentInstance();
-		setWaitConfig();
+		WaitUtils.setWaitConfig();
+		this.waitUtils = WaitUtilityFactory.getWaitUtils();
 		this.driver.get(url);
+		
 		action = new Actions(driver);
 		je = (JavascriptExecutor) driver;
 		ts = (TakesScreenshot) driver;
@@ -100,7 +86,6 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 				break;
 		}
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeOuts));
 		driver.get(url);
 		action = new Actions(driver);
 		je = (JavascriptExecutor) driver;
@@ -113,11 +98,6 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 		{
 			e.printStackTrace();
 		}
-		wait = new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime));
-		fluentWait =new FluentWait<WebDriver>(driver)
-		.withTimeout(Duration.ofSeconds(15))
-		.pollingEvery(Duration.ofMillis(300))
-		.ignoring(Exception.class);
 	}
 
 	@Override
@@ -171,31 +151,31 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 	@Override
 	public void selectValue(WebElement element, String value) 
 	{	
-		new Select(waitUntilElementVisible(element)).selectByValue(value);
+		new Select(waitUtils.waitUntilElementVisible(element)).selectByValue(value);
 	}
 
 	@Override
 	public void selectText(WebElement element, String text) 
 	{
-		new Select(waitUntilElementVisible(element)).selectByVisibleText(text);
+		new Select(waitUtils.waitUntilElementVisible(element)).selectByVisibleText(text);
 	}
 
 	@Override
 	public void selectIndex(WebElement element, int position) 
 	{
-		new Select(waitUntilElementVisible(element)).selectByIndex(position);
+		new Select(waitUtils.waitUntilElementVisible(element)).selectByIndex(position);
 	}
 
 	@Override
 	public void click(WebElement element) 
 	{
-		waitUntilElementClickable(element).click();
+		waitUtils.waitUntilElementClickable(element).click();
 	}
 
 	@Override
 	public void enterText(WebElement element, String testData) 
 	{
-		WebElement inputField=waitUntilElementClickable(element);
+		WebElement inputField=waitUtils.waitUntilElementClickable(element);
 		inputField.clear();
 		inputField.sendKeys(testData);
 	}
@@ -203,7 +183,7 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 	@Override
 	public void appendText(WebElement element, String testData) 
 	{
-		waitUntilElementClickable(element).sendKeys(testData);
+		waitUtils.waitUntilElementClickable(element).sendKeys(testData);
 	}
 
 	@Override
@@ -234,22 +214,6 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 	public boolean isSelected(WebElement element) 
 	{
 		return element.isSelected();
-	}
-
-	@Override
-	public WebElement waitUntilElementVisible(WebElement element) 
-	{
-		wait.withMessage("Waiting for the element to be visible")
-		.until(ExpectedConditions.visibilityOf(element));
-		return element;
-	}
-	
-	@Override
-	public  WebElement waitUntilElementClickable(WebElement element)
-	{
-		wait.withMessage("waiting for the element to be clickable")
-		.until(ExpectedConditions.elementToBeClickable(element));
-		return element;
 	}
 
 	@Override
@@ -298,12 +262,6 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 	public void keyUp(Keys key) 
 	{
 		action.keyUp(key).perform();
-	}
-
-	@Override
-	public void jsWaitForPageToLoad() 
-	{
-		wait.until(driver -> je.executeScript("return document.readyState").equals("complete"));
 	}
 
 	@Override
@@ -371,24 +329,5 @@ public class SeleniumBase extends DriverFactory implements WebCoreAPI
 	{
 		je.executeScript("arguments[0].removeAttribute('readonly');", element);
 	}
-
-	@Override
-	public void waitAndSwitchToFrame(WebElement element) 
-	{
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
-	}
-
-	@Override
-	public void waitAndSwitchToFrame(String nameOrId) 
-	{
-		wait.until((ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId)));
-	}
-
-	@Override
-	public void waitAndSwitchToFrame(int index) 
-	{
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
-	}
-
 	
 }
